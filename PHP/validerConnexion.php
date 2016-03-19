@@ -14,7 +14,10 @@ if (isset($_POST['submit']))
 		
 	} else {
 		$niveau = '';
+		
 		echo ("<script>console.log('fffffff');</script>");
+		echo $_POST['code'];
+		echo $_POST['motdepasse'];
 		// Vérifie si la combinaison existe dans la BD
 		 
 		if (VerifierInfosUtilisateurExistent($_POST['code'], $_POST['motdepasse']))

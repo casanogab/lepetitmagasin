@@ -16,7 +16,7 @@ function VerifierUtilisateurExiste($code)
 {
 	
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code=' + $code + '";
+	$query = "SELECT * utilisateur where code='$code'";
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete VerifierUtilisateurExiste nexiste pas');</script>");
@@ -30,10 +30,14 @@ function VerifierInfosUtilisateurExistent($code,$motdepasse)
 {
 
 	$conn = connexionDBMySql();
-	//$query = "SELECT * from utilisateur where code=' + $code + ' and motDePasse=' + MD5($motdepasse)+ '";
+	$md5MDP = MD5($motdepasse);
+	//$query = "SELECT * from utilisateur where code='$code' and motDePasse='$md5MDP'";
+	//$query = "SELECT * FROM utilisateur where code='root' and motDePasse=MD5('super')";
 	//$query = "SELECT * FROM utilisateur where code='root'";
-	$query = "SELECT * FROM utilisateur where code='root' and motDePasse=MD5('super')";
-	
+	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$md5MDP'";
+	//echo $code;
+	//echo $motdepasse;
+	//echo $md5MDP;
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete connexionDBMySql nexiste pas');</script>");
@@ -41,7 +45,9 @@ function VerifierInfosUtilisateurExistent($code,$motdepasse)
 		echo ("<script>console.log('dans le else');</script>");
 		$row = mysqli_fetch_array ( $result );
 		$codeRequete = $row['code'];
-		if ($codeRequete == "root" ){
+		echo "===>";
+		echo $codeRequete;
+		if ($codeRequete == 'root' ){
 			echo ("<script>console.log('Le code est valide');</script>");
 		return true;	
 		}
@@ -57,7 +63,7 @@ function GetUtilisateurs()
 {
 	$options = array();
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code=' + $code + ' and motDePasse=' + $motdepasse+ '";
+	$query = "SELECT * utilisateur where code='$code' and motDePasse='$motdepasse'";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -76,7 +82,7 @@ function GetNiveauSecurite($code)
 {
 	$niveauSecurite = '';
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code=' + $code + ' ";
+	$query = "SELECT * utilisateur where code='$code' ";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -93,7 +99,7 @@ function GetNiveauSecurite($code)
 function SetNouveauMotDePasse($code, $motdepasse)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code=' + $code + ' (motDePasse) VALUES (MD5('supermotdepasse'))";
+	$query = "insert into utilisateur where code='$code' (motDePasse) VALUES (MD5('supermotdepasse'))";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -108,7 +114,7 @@ function SetNouveauMotDePasse($code, $motdepasse)
 function SetNiveauSecurite($code, $niveau)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code=' + $code + ' (niveauSecurite) VALUES ('+ $niveau +')";
+	$query = "insert into utilisateur where code='$code' (niveauSecurite) VALUES ('+ $niveau +')";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -123,7 +129,7 @@ function SetNiveauSecurite($code, $niveau)
 function SetUtilisateurActif($code, $actif)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code=' + $code + ' (estActif) VALUES ('+ $actif +')";
+	$query = "insert into utilisateur where code='$code' (estActif) VALUES ('+ $actif +')";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {

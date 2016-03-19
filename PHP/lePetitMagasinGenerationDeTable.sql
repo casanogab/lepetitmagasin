@@ -97,27 +97,32 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `tef`
--- tef(epreuve, resultat, points) 
 
-CREATE TABLE IF NOT EXISTS `tef` (
+--INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser', MD5('supermotdepasse'),'lapin','janeot',1,true,false);
+
+-- Table structure for table `utilisateur`
+
+CREATE TABLE IF NOT EXISTS `utilisateur` (
 `id` int(10) NOT NULL,
-`epreuve` ENUM('CO', 'CE', 'EO', 'EE'),
-  `resultat`ENUM('A1', 'A2', 'B1', 'B2', 'C1', 'C2'),
-  `points` int(10) NOT NULL
+`utilisateur` varchar(50) NOT NULL,
+`motDePasse` varchar(50) NOT NULL,
+`nom` varchar(50) NOT NULL,
+`prenom` varchar(50) NOT NULL,
+`niveauSecurite` int(5) NOT NULL, --0 = admin 1= usager
+`estActif` boolean NOT NULL,
+`estSupprimer` boolean NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Indexes for table `tef`
+-- Indexes for table `utilisateur`
 --
-ALTER TABLE `tef`
+ALTER TABLE `utilisateur`
  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for table `tef`
+-- AUTO_INCREMENT for table `utilisateur`
 --
-ALTER TABLE `tef`
+ALTER TABLE `utilisateur`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 

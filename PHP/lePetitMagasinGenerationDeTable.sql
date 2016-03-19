@@ -99,16 +99,17 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 
 --INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser', MD5('supermotdepasse'),'lapin','janeot',1,true,false);
-
+--INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('root', MD5('super'),'lapin','janeot',1,true,false);
 -- Table structure for table `utilisateur`
+--0 = admin 1= usager
 
 CREATE TABLE IF NOT EXISTS `utilisateur` (
 `id` int(10) NOT NULL,
-`utilisateur` varchar(50) NOT NULL,
+`code` varchar(50) NOT NULL,
 `motDePasse` varchar(50) NOT NULL,
 `nom` varchar(50) NOT NULL,
 `prenom` varchar(50) NOT NULL,
-`niveauSecurite` int(5) NOT NULL, --0 = admin 1= usager
+`niveauSecurite` int(5) NOT NULL, 
 `estActif` boolean NOT NULL,
 `estSupprimer` boolean NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -7,6 +7,7 @@ include('validerConnexion.php');
 
 	<head>
 		<title>Connexion</title>
+		<meta charset="UTF-8">
 	</head>
 
 	<body>
@@ -47,7 +48,7 @@ include('validerConnexion.php');
 	
 	<br> <br>
 	<footer>
-		<h4>Marc_Étienne Leblanc et Gabriel Poulin</h4> 
+		<h4>Marc-Étienne Leblanc et Gabriel Poulin</h4> 
 		<h4>2016. Tous droits réservés.</h4>
 	</footer>
 

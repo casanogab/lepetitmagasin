@@ -5,7 +5,7 @@ function connexionDBMySql(){
 	try{
 	$conn = new mysqli ( "localhost", "demo", "demopass", "lepetitmagasin" );
 	}catch(Exception $e){
-		console.log("ERREUR: connexion DB");
+		echo ("<script>console.log('ERREUR: connexion DB');</script>");
 	}
 	return $conn;
 }
@@ -14,29 +14,41 @@ function connexionDBMySql(){
 // Vérifie si l'utilisateur existe dans la BD
 function VerifierUtilisateurExiste($code)
 {
+	
 	$conn = connexionDBMySql();
 	$query = "SELECT * utilisateur where code=' + $code + '";
-	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
-		console.log("ERREUR: requete VerifierUtilisateurExiste n'existe pas");
+		echo ("<script>console.log('ERREUR: requete VerifierUtilisateurExiste nexiste pas');</script>");
 		return false;
 	}
 	return true;
-}
+} 
 
 // Vérifie si la combinaison d'un code utilisateur et mot de passe existe dans la BD et si l'utilisateur est actif
 function VerifierInfosUtilisateurExistent($code,$motdepasse)
 {
-	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code=' + $code + ' and motDePasse=' + $motdepasse+ '";
 
+	$conn = connexionDBMySql();
+	//$query = "SELECT * from utilisateur where code=' + $code + ' and motDePasse=' + MD5($motdepasse)+ '";
+	//$query = "SELECT * FROM utilisateur where code='root'";
+	$query = "SELECT * FROM utilisateur where code='root' and motDePasse=MD5('super')";
+	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
-		console.log("ERREUR: requete connexionDBMySql n'existe pas");
-		return false;
+		echo ("<script>console.log('ERREUR: requete connexionDBMySql nexiste pas');</script>");
+	}else{
+		echo ("<script>console.log('dans le else');</script>");
+		$row = mysqli_fetch_array ( $result );
+		$codeRequete = $row['code'];
+		if ($codeRequete == "root" ){
+			echo ("<script>console.log('Le code est valide');</script>");
+		return true;	
+		}
+		
 	}
-	return true;
+	
+	return false;
 }
 	
 
@@ -49,7 +61,7 @@ function GetUtilisateurs()
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
-		console.log("ERREUR: requete GetUtilisateurs n'existe pas");
+		echo ("<script>console.log('ERREUR: requete GetUtilisateurs nexiste pas');</script>");
 		return false;
 	}
 	while ( $row = mysqli_fetch_array ( $result ) ) {		
@@ -68,7 +80,7 @@ function GetNiveauSecurite($code)
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
-		console.log("ERREUR: requete GetNiveauSecurite n'existe pas");
+		echo ("<script>console.log('ERREUR: requete GetNiveauSecurite nexiste pas');</script>");
 		return false;
 	}
 	$row = mysqli_fetch_array ( $result );
@@ -77,173 +89,65 @@ function GetNiveauSecurite($code)
 	return $niveauSecurite;
 }
 
-// Trouve dans la BD si c'est la première connexion de l'utilisateur
-function GetPremiereConnexion($code)
-{
-	$premiereConnexion = '';
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!');
-	
-	foreach($xml as $utilisateur) 
-		{
-			if ($utilisateur->code == $code)
-			{
-				return (string)$premiereConnexion = $utilisateur->premierlogin;
-			} 
-		}
-		
-	return $premiereConnexion;
-}
-
-// Retourne le montant total amassé par l'employé pendant son quart de travail et qui est inscrit dans la BD
-function GetMontantVentesDuQuart($noQuartUnique)
-{
-	$montantTotalVentes = 0;
-	$xml = simplexml_load_file("Ressources/XML/quartsDeTravail.xml") or die("Erreur: Ne peut charger le fichier quartsDeTravail.xml ou il est inexistant!");
-	
-	foreach ($xml as $quart)
-	{
-		if ($quart->noQuartUnique == $noQuartUnique)
-		{
-			return (float)$montantTotalVentes = $quart->montantTotalVentes;
-		}
-	}
-	return $montantTotalVentes;
-}
-
-// Incrémente de 1 le numéro de quart de travail unique
-function AugmenteNoQuartUnique() {
-	$xml = simplexml_load_file('Ressources/XML/parametresCoop.xml') or die("Erreur: Ne peut charger le fichier quartsDeTravail.xml ou il est inexistant!");
-	$sxe = new SimpleXMLElement($xml->asXML());	
-	$sxe->noQuartUnique = $sxe->noQuartUnique + 1;
-	$sxe->asXML('Ressources/XML/parametresCoop.xml');
-	
-	return (integer)$sxe->noQuartUnique;
-}
-
-// Enregistre l'heure de la fin du quart de travail
-function SetHeureFinDeQuart($noQuartUnique) {
-	$xml = simplexml_load_file('Ressources/XML/quartsDeTravail.xml') or die("Erreur: Ne peut charger le fichier quartsDeTravail.xml ou il est inexistant!");
-		
-	foreach ($xml as $quart)
-	{
-		if ($quart->noQuartUnique == $noQuartUnique)
-		{
-			$quart->heureFin = date('H:i:s');
-			$xml->asXML('Ressources/XML/quartsDeTravail.xml');
-			
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-// Enregistre si c'est la première connexion de l'utilisateur
-function SetPremiereConnexion($code, $premiereConnexion)
-{
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!');
-	
-	foreach($xml as $utilisateur) 
-		{
-			if ($utilisateur->code == $code)
-			{
-				$utilisateur->premierlogin = $premiereConnexion;  
-				$xml->asXML('Ressources/XML/utilisateurs.xml');
-			
-				return true;
-			} 
-		}
-
-	return false;		
-}
-
 // Enregistre un nouveau mot de passe dans la BD
 function SetNouveauMotDePasse($code, $motdepasse)
 {
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!');;
-	
-	foreach($xml as $utilisateur) 
-	{
-		if ($utilisateur->code == $code)
-		{
-			$utilisateur->motdepasse = $motdepasse;  
-			$xml->asXML('Ressources/XML/utilisateurs.xml');
-				
-			return true;
-		}
+	$conn = connexionDBMySql();
+	$query = "insert into utilisateur where code=' + $code + ' (motDePasse) VALUES (MD5('supermotdepasse'))";
+
+	$result = mysqli_query ( $conn, "$query" );
+	if (! $result) {
+		echo ("<script>console.log('ERREUR: requete SetNouveauMotDePasse nexiste pas');</script>");
+		return false;
 	}
 	
-	return false;
+	return true;
 }
 
 // Enregistre le niveau choisit (employe ou gestionnaire) pour un utilisateur dans la BD
-function SetNiveau($code, $niveau)
+function SetNiveauSecurite($code, $niveau)
 {
-	$niveau = '';
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!');
+	$conn = connexionDBMySql();
+	$query = "insert into utilisateur where code=' + $code + ' (niveauSecurite) VALUES ('+ $niveau +')";
 	
-	foreach($xml as $utilisateur) 
-	{
-		if ($utilisateur->code == $code)
-		{
-			$utilisateur->niveau = $niveau;  
-			$xml->asXML('Ressources/XML/utilisateurs.xml');
-	
-			return true;
-		} 
+	$result = mysqli_query ( $conn, "$query" );
+	if (! $result) {
+		echo ("<script>console.log('ERREUR: requete SetNiveauSecurite nexiste pas');</script>");
+		return false;
 	}
-
-	return false;
+	
+	return true;
 }
 
-// Désactive un utilisateur dans la BD
+// Désactive/active un utilisateur dans la BD
 function SetUtilisateurActif($code, $actif)
 {
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!');
-		
-	foreach($xml as $utilisateur) 
-	{
-		if ($utilisateur->code == $code)
-		{
-			$utilisateur->actif = $actif;  
-	 		$xml->asXML('Ressources/XML/utilisateurs.xml');
-	 		
-			return true;
-		} 
+	$conn = connexionDBMySql();
+	$query = "insert into utilisateur where code=' + $code + ' (estActif) VALUES ('+ $actif +')";
+	
+	$result = mysqli_query ( $conn, "$query" );
+	if (! $result) {
+		echo ("<script>console.log('ERREUR: requete SetUtilisateurActif nexiste pas');</script>");
+		return false;
 	}
 	
-	return false;
+	return true;
 }
 
 
 // Enregistre un utilisateur "actif" dans la BD
-function AjouterUtilisateur($code, $niveau)
+function AjouterUtilisateur($code, $motDePasse, $nom, $Prenom, $niveauSecurite, $estActif, $estSupprimer)
 {
-	$xml = simplexml_load_file('Ressources/XML/utilisateurs.xml') or die('Erreur de lecture du fichier "utilisateurs.xml"!'); 
-	$sxe = new SimpleXMLElement($xml->asXML());
-	$utilisateur = $sxe->addChild('utilisateur');
-	$utilisateur->addChild('code', $code);
-	$utilisateur->addChild('motdepasse', $code);
-	$utilisateur->addChild('niveau', $niveau);
-	$utilisateur->addChild('actif', 'oui');
-	$utilisateur->addChild('premierlogin', 'oui');
-    	$sxe->asXML('Ressources/XML/utilisateurs.xml');  
-}
-
-
-function CreerNouveauQuartDeTravail($code, $noQuartUnique) 
-{
-	$xml = simplexml_load_file('Ressources/XML/quartsDeTravail.xml') or die("Erreur: Ne peut charger le fichier quartsDeTravail.xml ou il est inexistant!");
-	$sxe = new SimpleXMLElement($xml->asXML());
-	$quart = $sxe->addChild('quart');
-	$quart->addChild('noQuartUnique', $noQuartUnique);
-	$quart->addChild('code', $code);
-	$quart->addChild('montantTotalVentes', '0');
-	$quart->addChild('montantTotalRemboursements', '0');
-	$quart->addChild('date', date('y-m-d'));
-	$quart->addChild('heureDebut', date('H:i:s'));
-	$quart->addChild('heureFin', '0');
-	$sxe->asXML('Ressources/XML/quartsDeTravail.xml');
+	$conn = connexionDBMySql();
+	$query = "INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser', MD5(' + $motDepasse + '),'+ $nom +','+ $prenom +', '+ $niveauSecurite +',true,false)";
+	
+	$result = mysqli_query ( $conn, "$query" );
+	if (! $result) {
+		echo ("<script>console.log('ERREUR: requete AjouterUtilisateur nexiste pas');</script>");
+		return false;
+	}
+	
+	return true;
 }
 
 ?>

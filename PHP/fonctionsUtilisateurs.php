@@ -16,7 +16,7 @@ function VerifierUtilisateurExiste($code)
 {
 	
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code='$code'";
+	$query = "SELECT * FROM utilisateur where code='$code'";
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete VerifierUtilisateurExiste nexiste pas');</script>");
@@ -31,13 +31,8 @@ function VerifierInfosUtilisateurExistent($code,$motdepasse)
 
 	$conn = connexionDBMySql();
 	$md5MDP = MD5($motdepasse);
-	//$query = "SELECT * from utilisateur where code='$code' and motDePasse='$md5MDP'";
-	//$query = "SELECT * FROM utilisateur where code='root' and motDePasse=MD5('super')";
-	//$query = "SELECT * FROM utilisateur where code='root'";
+
 	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$md5MDP'";
-	//echo $code;
-	//echo $motdepasse;
-	//echo $md5MDP;
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete connexionDBMySql nexiste pas');</script>");
@@ -45,11 +40,12 @@ function VerifierInfosUtilisateurExistent($code,$motdepasse)
 		echo ("<script>console.log('dans le else');</script>");
 		$row = mysqli_fetch_array ( $result );
 		$codeRequete = $row['code'];
-		echo "===>";
-		echo $codeRequete;
-		if ($codeRequete == 'root' ){
-			echo ("<script>console.log('Le code est valide');</script>");
-		return true;	
+		$mdpRequete = $row['motDePasse'];
+		//echo $codeRequete;
+		//echo $mdpRequete;
+		if ($codeRequete == $code && $mdpRequete == $md5MDP ){
+		 echo ("<script>console.log('Le code est valide');</script>");
+		 return true;	
 		}
 		
 	}
@@ -63,7 +59,7 @@ function GetUtilisateurs()
 {
 	$options = array();
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code='$code' and motDePasse='$motdepasse'";
+	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$motdepasse'";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -82,7 +78,7 @@ function GetNiveauSecurite($code)
 {
 	$niveauSecurite = '';
 	$conn = connexionDBMySql();
-	$query = "SELECT * utilisateur where code='$code' ";
+	$query = "SELECT * FROM utilisateur where code='$code' ";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {

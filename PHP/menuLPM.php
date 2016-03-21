@@ -159,7 +159,7 @@ echo '</div>';
 echo '<div id="fonctions_gestionnaire">';
 echo '<tr>';
 
-if ($_SESSION['niveau'] == 'gestionnaire'):
+if ($_SESSION['niveau'] == '0'):
 	echo '<td>';
 		echo '<a href="gestionnaireDeComptes.php"> Gestionnaire de comptes </a>';
 	echo '</td>';

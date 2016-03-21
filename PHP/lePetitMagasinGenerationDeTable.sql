@@ -98,8 +98,8 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 -- --------------------------------------------------------
 
 
---INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser', MD5('supermotdepasse'),'lapin','janeot',1,true,false);
---INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('root', MD5('super'),'lapin','janeot',1,true,false);
+--INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('petit', MD5('petit'),'petitlapin','petitjaneot',1,true,false);
+--INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('root', MD5('super'),'lapin','janeot',0,true,false);
 -- Table structure for table `utilisateur`
 --0 = admin 1= usager
 

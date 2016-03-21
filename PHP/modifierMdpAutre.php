@@ -1,5 +1,5 @@
 <?php
-include('menuCPMEL.php');
+include('menuLPM.php');
 include('validerModifierMdpAutre.php');
 
 if (!isset($_SESSION['code'])) {
@@ -25,7 +25,7 @@ if (!isset($_SESSION['code'])) {
 				<fieldset >
 					<label for='gestionnaire'>Est gestionnaire: 
 						<?php 
-							if ($niveau == 'gestionnaire') { echo  "OUI"; } 
+							if ($niveau == '0' ) { echo  "OUI"; } 
 							else {echo "NON";} 
 						?>
 					</label> 

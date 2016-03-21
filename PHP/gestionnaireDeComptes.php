@@ -1,5 +1,5 @@
 <?php
-include('menuCPMEL.php');
+include('menuLPM.php');
 include('validerGestionnaireDeComptes.php');
 
 if (!isset($_SESSION['code'])) {

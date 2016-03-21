@@ -59,7 +59,7 @@ function GetUtilisateurs()
 {
 	$options = array();
 	$conn = connexionDBMySql();
-	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$motdepasse'";
+	$query = "SELECT * FROM utilisateur";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {

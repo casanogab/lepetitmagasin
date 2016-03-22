@@ -15,7 +15,16 @@ if (isset($_POST['submit1']))
 	if (empty($_POST['code'])) 
 	{
 		$erreur = "Le code d'utilisateur est vide! SVP réessayez à nouveau.";
-		
+	} else if (empty($_POST['mdp']))
+	{
+		$erreur = "Le mot de passe est vide! SVP réessayez à nouveau.";
+	} else if (empty($_POST['nom']))
+	{
+		$erreur = "Le nom est vide! SVP réessayez à nouveau.";
+	} else if (empty($_POST['prenom']))
+	{
+		$erreur = "Le prenom est vide! SVP réessayez à nouveau.";
+			
 	// Vérifie si l'utilisateur existe déjà
 	} else if (VerifierUtilisateurExiste($_POST['code']))
 	{
@@ -25,12 +34,13 @@ if (isset($_POST['submit1']))
 	} else {
 	
 		// Vérifie si l'utilisateur a coché la case "est gestionnaire"
-		if (($_POST['gestionnaire']) == "oui") 
+		$niveau = 1;
+		if (isset($_POST['gestionnaire']))
 		{
-			$niveau = "gestionnaire";
+			$niveau = 0;
 		}
 		
-		AjouterUtilisateur($_POST['code'], $niveau);
+		AjouterUtilisateur($_POST['code'],$_POST['mdp'],$_POST['nom'],$_POST['prenom'], $niveau);
 		echo  '<script> alert("L\'utilisateur a été créé"); document.location.href = "gestionnaireDeComptes.php"</script>';
 			
 		exit();
@@ -61,7 +71,7 @@ if (isset($_POST['submit2']) && (isset($_POST['code'])))
 if (isset($_POST['submit3']) && (isset($_POST['code'])))
 {
 	// Désactive l'utilisateur sélectionné dans la BD
-	if (SetUtilisateurActif($_POST['code'], "non"))
+	if (SetUtilisateurActif($_POST['code'], 0))
 	{
 		echo  '<script> alert("L\'utilisateur a été supprimé"); document.location.href = "gestionnaireDeComptes.php"</script>';
 		

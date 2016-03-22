@@ -28,6 +28,7 @@ if (isset($_POST['submit']))
 			// Création des variables de session (code utilisateur, niveau utilisateur, noQuartUnique)
 			$_SESSION['code'] = $_POST['code'];
 			$_SESSION['niveau'] = $niveau;
+			exit(header("location: index.php"));
 			
 		} else {
 			$erreur = "Le code d'utilisateur ou le mot de passe est invalide! SVP réessayez à nouveau. 2";

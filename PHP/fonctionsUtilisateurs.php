@@ -13,12 +13,13 @@ function connexionDBMySql(){
 	    
 // Vérifie si l'utilisateur existe dans la BD
 function VerifierUtilisateurExiste($code)
-{
-	
+{	
 	$conn = connexionDBMySql();
 	$query = "SELECT * FROM utilisateur where code='$code'";
 	$result = mysqli_query ( $conn, "$query" );
-	if (! $result) {
+	$row = mysqli_fetch_array ( $result );
+	$codeRequete = $row['code'];
+	if (!($codeRequete == $code)){
 		echo ("<script>console.log('ERREUR: requete VerifierUtilisateurExiste nexiste pas');</script>");
 		return false;
 	}
@@ -32,7 +33,7 @@ function VerifierInfosUtilisateurExistent($code,$motdepasse)
 	$conn = connexionDBMySql();
 	$md5MDP = MD5($motdepasse);
 
-	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$md5MDP'";
+	$query = "SELECT * FROM utilisateur where code='$code' and motDePasse='$md5MDP' and estActif=1";
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete connexionDBMySql nexiste pas');</script>");
@@ -59,7 +60,7 @@ function GetUtilisateurs()
 {
 	$options = array();
 	$conn = connexionDBMySql();
-	$query = "SELECT * FROM utilisateur";
+	$query = "SELECT * FROM utilisateur where estActif=1";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -127,8 +128,7 @@ function SetNiveauSecurite($code, $niveau)
 function SetUtilisateurActif($code, $actif)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code='$code' (estActif) VALUES ('$actif')";
-	
+	$query = 	$query = "UPDATE utilisateur SET estActif = '$actif' WHERE code = '$code'";
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
 		echo ("<script>console.log('ERREUR: requete SetUtilisateurActif nexiste pas');</script>");
@@ -140,11 +140,11 @@ function SetUtilisateurActif($code, $actif)
 
 
 // Enregistre un utilisateur "actif" dans la BD
-function AjouterUtilisateur($code, $motDePasse, $nom, $Prenom, $niveauSecurite, $estActif, $estSupprimer)
+function AjouterUtilisateur($code, $motDePasse, $nom, $prenom, $niveauSecurite)
 {
 	$conn = connexionDBMySql();
-	$md5MDP = MD5($motdepasse);
-	$query = "INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser','$md5MDP','$nom','$prenom', '$niveauSecurite',true,false)";
+	$md5MDP = MD5($motDePasse);
+	$query = "INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('$code','$md5MDP','$nom','$prenom','$niveauSecurite',true,false)";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {

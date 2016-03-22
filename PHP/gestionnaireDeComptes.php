@@ -28,9 +28,21 @@ if (!isset($_SESSION['code'])) {
 								<label for='code'>Code utilisateur:</label>
 								<input type='text' name='code' id='code'  maxlength="25"> 
 								<br>
- 
+								
+								<label for='mdp'>Mot de passe:</label>
+								<input type='text' name='mdp' id='mdp'  maxlength="25"> 
+								<br>
+								
+								<label for='nom'>Nom:</label>
+								<input type='text' name='nom' id='nom'  maxlength="25"> 
+								<br>
+								
+								<label for='prenom'>Prénom:</label>
+								<input type='text' name='prenom' id='prenom'  maxlength="25"> 
+								<br>
+
 								<label for='gestionnaire'>Est gestionnaire:</label>
-								<input type="checkbox" name="gestionnaire" value="oui"> 
+								<input type="checkbox" name="gestionnaire" value=0> 
 								<br><br>
  
 								<input type='submit' name='submit1' value='Ajouter'>

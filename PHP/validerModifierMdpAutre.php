@@ -2,7 +2,7 @@
 include('fonctionsUtilisateurs.php');
 
 $erreur='';
-$niveau = GetNiveau($_SESSION['codeAutreEmploye']); 
+$niveau = GetNiveauSecurite($_SESSION['codeAutreEmploye']); 
 
 // Vérifie si l'utilisateur a appuyé sur le bouton "Enregistrer"
 if (isset($_POST['submit'])) 

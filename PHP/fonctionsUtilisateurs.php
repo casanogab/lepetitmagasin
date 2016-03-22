@@ -95,7 +95,9 @@ function GetNiveauSecurite($code)
 function SetNouveauMotDePasse($code, $motdepasse)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code='$code' (motDePasse) VALUES (MD5('supermotdepasse'))";
+	$md5MDP = MD5($motdepasse);
+	
+	$query = "UPDATE utilisateur SET motDePasse = '$md5MDP' WHERE code = '$code'";
 
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -110,7 +112,7 @@ function SetNouveauMotDePasse($code, $motdepasse)
 function SetNiveauSecurite($code, $niveau)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code='$code' (niveauSecurite) VALUES ('+ $niveau +')";
+	$query = "insert into utilisateur where code='$code' (niveauSecurite) VALUES ('$niveau')";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -125,7 +127,7 @@ function SetNiveauSecurite($code, $niveau)
 function SetUtilisateurActif($code, $actif)
 {
 	$conn = connexionDBMySql();
-	$query = "insert into utilisateur where code='$code' (estActif) VALUES ('+ $actif +')";
+	$query = "insert into utilisateur where code='$code' (estActif) VALUES ('$actif')";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {
@@ -141,7 +143,8 @@ function SetUtilisateurActif($code, $actif)
 function AjouterUtilisateur($code, $motDePasse, $nom, $Prenom, $niveauSecurite, $estActif, $estSupprimer)
 {
 	$conn = connexionDBMySql();
-	$query = "INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser', MD5(' + $motDepasse + '),'+ $nom +','+ $prenom +', '+ $niveauSecurite +',true,false)";
+	$md5MDP = MD5($motdepasse);
+	$query = "INSERT INTO utilisateur (code, motDePasse, nom, prenom, niveauSecurite, estActif, estSupprimer) VALUES ('unUser','$md5MDP','$nom','$prenom', '$niveauSecurite',true,false)";
 	
 	$result = mysqli_query ( $conn, "$query" );
 	if (! $result) {

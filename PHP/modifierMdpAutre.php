@@ -25,7 +25,7 @@ if (!isset($_SESSION['code'])) {
 				<fieldset >
 					<label for='gestionnaire'>Est gestionnaire: 
 						<?php 
-							if ($niveau == '0' ) { echo  "OUI"; } 
+							if ($niveau == 0) { echo  "OUI"; } 
 							else {echo "NON";} 
 						?>
 					</label> 

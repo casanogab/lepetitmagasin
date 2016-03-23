@@ -10,7 +10,7 @@ echo '<!DOCTYPE HTML>';
 echo '<html>';
 	echo '<head>';
         echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-		echo '<link rel="stylesheet" type="text/css" href="Ressources/CSS/coopstyle.css">';
+		echo '<link rel="stylesheet" type="text/css" href="../Ressources/CSS/magasinstyle.css">';
 	echo '</head>';
 
 echo '<div id="div_table_accueil">';

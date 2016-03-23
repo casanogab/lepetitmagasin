@@ -27,12 +27,13 @@ SET time_zone = "-05:00";
 
 CREATE TABLE IF NOT EXISTS `produit` (
 `id` int(10) NOT NULL,
-`quantite` int(10) NOT NULL,
 `nom` varchar(50) NOT NULL,
+`quantite` int(10) NOT NULL,
 `description` varchar(100) NOT NULL,
-`couts` float(10) NOT NULL,
+`cout` float(10) NOT NULL,
 `image` varchar(50),
-`code` int(10)
+`code` int(10),
+`estActif` boolean NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `produit`
@@ -41,7 +42,7 @@ ALTER TABLE `produit`
 ALTER TABLE `produit`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-
+INSERT INTO produit (nom, quantite, description, cout, image,code,estActif) VALUES ('efface', 10,'efface rose',10.24,'imageefface','leCode',true);
 -- --------------------------------------------------------
 
 --

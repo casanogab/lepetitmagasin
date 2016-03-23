@@ -9,15 +9,15 @@
 
 <?php
 include('menuLPM.php'); 
-//include('utilitaire.php');
+include('fonctionsItem.php');
 echo "<h1>Bienvenue sur la page d'accueil</h1>";
 echo '<form action="rechercherPageAccueil.php" method="post" enctype="multipart/form-data">';
 echo '<div id="div_table_accueil">';
 echo '<Center><table><tr><td><input type="text" name="champRecherche">';
 echo '<input type="submit" name="submit" value="Rechercher"></td></tr></table></div><br>';
-   $sxe = itemsXML();
-   $items = $sxe->items[0];
-   $noItemUnique = $item->noItemUnique;
+  //$sxe = itemsXML();
+   $items = GetProduits;
+   //$noItemUnique = $item->noItemUnique;
      $i=1; 
      echo '<div id="div_table_accueil">';
      echo '<table align=center ><br><tr>';

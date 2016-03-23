@@ -1,0 +1,61 @@
+  body {
+	padding-left: 11em;
+	font-family: Georgia, "Times New Roman",
+        Times, serif;
+    	color: purple;
+    	background-color: white }
+
+
+
+a:link{
+	font-family:sans-serif;
+	font-weight:700;
+	text-decoration: none;
+	
+}
+
+a:visited{
+	font-family:sans-serif;
+	font-weight:700;
+	color:#B0B0B0;
+	text-decoration: none;
+}
+
+address {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: thin dotted 
+}
+
+#div_Erreur{
+	font-weight:bold;
+	color: red
+}
+
+
+#div_table_accueil{
+	border: 1px solid black;
+	table-layout:fixed;
+	border-radius:0.5em;
+	width:1000px;
+	min-width:325px;
+	height: auto;
+	font-weight:bold;
+	text-align:center;
+	color:red;
+}
+
+.td_size {    
+  width:200px; 
+  height:50px;
+  max-width:200px;
+  min-width:200px; 
+  max-height:50px; 
+  min-height:50px;
+  **overflow:hidden; 
+}
+
+
+
+
+

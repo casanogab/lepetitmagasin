@@ -10,7 +10,7 @@ function connexionDBMySql(){
 	return $conn;
 }
 
-// Charge tous les produits "actifs" qui sont dans la BD et les classes par ordre alphabétique
+// fonctionne bien
 function GetProduits()
 {
 	$options = array();
@@ -22,8 +22,17 @@ function GetProduits()
 		echo ("<script>console.log('ERREUR: requete GetProduits nexiste pas');</script>");
 		return false;
 	}
+	$i=0;
 	while ( $row = mysqli_fetch_array ( $result ) ) {
-		$options[] = $row ['nom'];
+		$options[$i][id] = $row ['id'];
+		$options[$i][quantite] = $row ['quantite'];
+		$options[$i][nom] = $row ['nom'];
+		$options[$i][description] = $row ['description'];
+		$options[$i][cout] = $row ['cout'];
+		$options[$i][photographie] = $row ['photographie'];
+		$options[$i][code] = $row ['code'];
+		$options[$i][estActif] = $row ['estActif'];
+		$i++;
 	}
 	sort($options);
 	return $options;

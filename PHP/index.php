@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
 <?php
 include('menuLPM.php'); 
 include('fonctionsItem.php');
@@ -15,33 +14,42 @@ echo '<form action="rechercherPageAccueil.php" method="post" enctype="multipart/
 echo '<div id="div_table_accueil">';
 echo '<Center><table><tr><td><input type="text" name="champRecherche">';
 echo '<input type="submit" name="submit" value="Rechercher"></td></tr></table></div><br>';
-  //$sxe = itemsXML();
-   $items = GetProduits;
-   //$noItemUnique = $item->noItemUnique;
+
+
+$items=GetProduits();
+foreach ($items as $item){	
+	echo $item[nom];
+	echo "allo";
+}
+
      $i=1; 
      echo '<div id="div_table_accueil">';
      echo '<table align=center ><br><tr>';
      $tableauAffichage = array();
-    
-     foreach ($items as $item)
-      {   
-            // Pour tout les items disponible on affiche la bonne photographie associé si elle est disponbile.
-            // sinon on utilise une photo générique.
-            if ($item->estDisponible == "oui")
+     foreach ($items as $item){           
+	  
+      	  
+          if ($item[estActif])
             {
-               $photo = $item->photographie;
-               if ("" == $item->photographie)
+               $photo = $item[photographie];
+               if ("" == $item[photographie])
                {
                   $photo = "APhotoND.jpg";
                }
-                // ici on vérifie que l'item n'est pas déjà afficher 
-               // on ne veut pas voir les 200 crayons rouges d'un items de lots sur la page d'accueil 
-                if (0==estAfficher($item->noUniqueEmplacement, $tableauAffichage))
-                {
-                  $lienImage = '<td><a href="afficheItem.php?noItemUnique='.$item->noItemUnique.'"><img src=Ressources/Images/imagesItems/'.$photo.' style="width:230px;height:180px"/></a><br>' ;
+               echo "<td>";
+               echo  $item [id];
+               echo "<br>";
+               echo  $item[quantite];
+               echo "<br>";
+               echo  $item[nom];
+               echo "<br>";
+               echo $item[description];
+               echo "<br>";
+               echo $item[cout];
+               echo "<br>";
+                  $lienImage = '<td><a href="afficheItem.php?noItemUnique='.$item[id].'"><img src=../Ressources/Images/imagesItems/'.$photo.' style="width:230px;height:180px"/></a><br>' ;
                   echo $lienImage;
-                  echo $item->noUniqueEmplacement."<br>"; 
-                  echo $item->description."</td>";
+                  echo "</td>";
                
                   if (0==$i%4){
                      echo "</tr><tr>";
@@ -49,13 +57,12 @@ echo '<input type="submit" name="submit" value="Rechercher"></td></tr></table></
                   $i = ++$i;
                }
             }
-     }
     echo '</tr></table></div>';
 ?>
 </form>
    <footer>
-		<h4>Gabriel Poulin et Marc-Etienne Leblanc</h4> 
-		<h4>2014. Tous droits réservés.</h4>
+		<h4>Gabriel Poulin</h4> 
+		<h4>2016. Tous droits réservés.</h4>
 	</footer>
 </body>
 </html>

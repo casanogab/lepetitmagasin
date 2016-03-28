@@ -5,11 +5,14 @@
   <title>LPM</title>
 </head>
 <body>
-
+<a href=""><img src="../Ressources/Images/imagesItems/petitePhoto.jpg" onmouseover="this.src='../Ressources/Images/imagesItems/APhotoND.jpg'" onmouseout="this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'"/></a>
 <?php
 include('menuLPM.php'); 
 include('fonctionsItem.php');
 echo "<h1>Bienvenue sur la page d'accueil</h1>";
+if ($_SESSION['code'] == ''){
+	echo "<font size=3 color=red>Veuillez utiliser le bouton connexion du menu!</font>";
+}else{
 echo '<form action="rechercherPageAccueil.php" method="post" enctype="multipart/form-data">';
 echo '<div id="div_table_accueil">';
 echo '<Center><table><tr><td><input type="text" name="champRecherche">';
@@ -47,7 +50,10 @@ foreach ($items as $item){
                echo "<br>";
                echo $item[cout];
                echo "<br>";
-                  $lienImage = '<td><a href="afficheItem.php?noItemUnique='.$item[id].'"><img src=../Ressources/Images/imagesItems/'.$photo.' style="width:230px;height:180px"/></a><br>' ;
+                  //$lienImage = '<td><a href="afficheItem.php?noItemUnique='.$item[id].'"><img src=../Ressources/Images/imagesItems/'.$photo.' style="width:230px;height:180px"/></a><br>' ;
+                                                                                
+                                                                              //echo "<img src=\"../Ressources/Images/imagesItems/petitePhoto.jpg\" onmouseover=\"this.src='../Ressources/Images/imagesItems/.$photo.'\" onmouseout=\"this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'\"/>";
+              $lienImage = "<td><a href='afficheItem.php?noItemUnique='.$item[id].'><img src=\"../Ressources/Images/imagesItems/petitePhoto.jpg\" onmouseover=\"this.src='../Ressources/Images/imagesItems/$photo'\" onmouseout=\"this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'\"/></a>";
                   echo $lienImage;
                   echo "</td>";
                
@@ -58,6 +64,7 @@ foreach ($items as $item){
                }
             }
     echo '</tr></table></div>';
+}
 ?>
 </form>
    <footer>

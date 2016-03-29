@@ -38,7 +38,8 @@ $items=GetProduits();
                		echo "<tr><td align=center colspan=3><div style=\"font-size: large; font-family: sans-serif\"><p style=\"color: #ffffff; background-color: #000000\">Catégorie:$categorie</p></div></td></tr>";
                }
                $categorieold = $item[categorie];
-               echo "<tr><td align=left>Quantité voulue:<input type='text' name=$item[id] value = 0>";
+               echo "<tr><td align=left>Quantité voulue:<input type='text' name=$item[id] id=$item[id] value = 0>";
+               //echo "<input type=\"hidden\" name="noItemUnique" value='.$noItemUnique.'>";
                echo "<td align=left>Id: ";
                echo  $item[id];
                echo "<br>Quantité disponible: ";

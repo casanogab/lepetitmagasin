@@ -2,9 +2,7 @@
 
 session_start();
 
-$tableauVente = array();
-$tableauVente = $_SESSION['vente'];
-$nbrItemVente = $_SESSION['nbrItemVente'];
+
 
 echo '<!DOCTYPE HTML>';
 echo '<html>';
@@ -16,50 +14,7 @@ echo '<html>';
 echo '<div id="div_table_accueil">';
 	echo '<table>';
 
-// Affichage des items ajoutés au panier de ventes par l'employé
-if ($nbrItemVente > 0){
- echo "Panier de Vente <BR>";
-}
-for($gg = 0; $gg < $nbrItemVente; $gg++)
-{
-  //echo "Panier de Vente = ".$tableauVente[$gg]." description = ".getDescription($tableauVente[$gg])."<br>";
-   $prix = floatval(getPrixItem($tableauVente[$gg]));
-  echo getDescription($tableauVente[$gg]).", Prix: ".number_format($prix, 2, ',', ' ')."$<br>";
-   $prixSansTaxe = $prixSansTaxe + $prix;
-}
 
-if ($nbrItemVente > 0){
-echo  'Prix total sans taxes: '.number_format($prixSansTaxe, 2, ',', ' ').'$<BR>';
-}
-
-//renvoie la description dun item
-function getDescription($noItemUnique) {    
- $description="";
-   $xml = simplexml_load_file("Ressources/XML/items.xml") or die("Erreur: Ne peut creer xml ou le fichier items.xml est inexistant ");
-   $sxe = new SimpleXMLElement($xml->asXML());
-   $items = $sxe->items[0];
-    foreach ($items as $item){
-     if (strcmp($item->noItemUnique, $noItemUnique)==0){
-           $description=$item->description;
-      }
-    }
-return $description;
-}
-
-
-// renvoie le prix
-function getPrixItem($noItemUnique) {    
-$prix = 0;  
-   $xml = simplexml_load_file("Ressources/XML/items.xml") or die("Erreur: Ne peut creer xml ou le fichier items.xml est inexistant ");
-   $sxe = new SimpleXMLElement($xml->asXML());
-   $items = $sxe->items[0];
-    foreach ($items as $item){
-     if (strcmp($item->noItemUnique, $noItemUnique)==0){
-           $prix=$item->prix;
-      }
-    }
-return $prix;
-}
 
 // DÉBUT - Première ligne du menu: options utilisateurs de base
 	echo '<div id="div_fonctions_employe">';
@@ -99,30 +54,6 @@ endif;
 // FIN - Première ligne du menu: options utilisateurs de base
 
 
-// DÉBUT - Deuxième ligne du menu: catégories d'items
-echo '<div id="div_Categories">';
-echo '<tr>';
-
-	echo '<td>';
-		echo '<a href="afficheCategorie.php?categorie=Fournitures scolaires"> Fournitures scolaires </a>';
-	echo '</td>';
-	
-	echo '<td>';
-		echo '<a href="afficheCategorie.php?categorie=Livres">Livres </a>';
-	echo '</td>';
-	
-	echo '<td>';
-		echo '<a href="afficheCategorie.php?categorie=Vêtements">Vêtements </a>';
-	echo '</td>';
-
-	echo '<td>';
-		echo '<a href="afficheCategorie.php?categorie=Autres"> Autres </a>';
-	echo '</td>';
-
-echo '</tr>';
-echo '</div>';
-// FIN - Deuxième ligne du menu: catégories d'items
-
 
 // DÉBUT - Troisième ligne du menu: fonctions de transaction
 echo '<div id="fonctions_transaction">';
@@ -138,26 +69,10 @@ if ($_SESSION['code'] != ''):
 	echo '</td>';
 	
 endif;
-	
-if ($_SESSION['vente'] != ''): 
-	echo '<td>';
-        echo '<a href="traiterUneVente.php">Paiement</a>';
-	echo '</td>';
-	
-	echo '<td>';
-        echo '<a href="viderPanier.php">Vider le panier</a>';
-	echo '</td>';
-	
-endif;
 
-echo '</tr>';
 echo '</div>';
-// FIN - Troisième ligne du menu: fonctions de transaction
 
-
-// DÉBUT - Quatrième ligne du menu: fonctions réservées aux gestionnaires
 echo '<div id="fonctions_gestionnaire">';
-echo '<tr>';
 
 if ($_SESSION['niveau'] == '0'):
 	echo '<td>';
@@ -172,7 +87,7 @@ endif;
 
 echo '</tr>';
 echo '</div>';
-// FIN - Quatrième ligne du menu: fonctions réservées aux gestionnaires
+// FIN - Troisième ligne du menu: fonctions réservées aux gestionnaires
 
 echo '</table>';
 echo '</div>';

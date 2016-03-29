@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `produit` (
 `description` varchar(100) NOT NULL,
 `cout` float(10) NOT NULL,
 `photographie` varchar(50),
+`categorie` varchar(50),
 `code` int(10),
 `estActif` boolean NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -42,7 +43,15 @@ ALTER TABLE `produit`
 ALTER TABLE `produit`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO produit (nom, quantite, description, cout, image,code,estActif) VALUES ('efface', 10,'efface rose',10.24,'imageefface','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('efface', 5,'efface rose',0.99,'efface.jpg','Agrafes, attaches dt adhésifs diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('crayon2', 10,'crayon jaune',0.50,'','Agrafes, attaches dt adhésifs diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('ciseau', 15,'ciseau noir',1.24,'ciseaunoir.jpg','Articles de bureau diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('ciseau de gauché', 20,'ciseau de gauche pouvant servir au droitier',20.25,'ciseaugauche.jpg','Articles de bureau diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('compat', 25,'regarde les étoile',10.00,'compat.jpg','Articles de bureau diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('rapporteur dangle', 30,'rapporteur dangle description',1.06,'rapporteurdangle.jpg','Articles de bureau diverses','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('Carton blanc', 30,'Carton blanc',0.60,'cartonblanc.jpg','Carton affiche(22pX28p)','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('Carton bleu ciel', 30,'Carton bleu ciel',0.60,'cartonbleuciel.jpg','Carton affiche(22pX28p)','leCode',true);
+INSERT INTO produit (nom, quantite, description, cout, photographie, categorie, code, estActif) VALUES ('Carton bleu marine', 30,'Carton bleu marine',0.60,'cartonbleumarine.jpg','Carton affiche(22pX28p)','leCode',true);
 -- --------------------------------------------------------
 
 --

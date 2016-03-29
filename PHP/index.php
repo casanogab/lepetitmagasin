@@ -1,69 +1,67 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="fr">
 <head>
+<meta charset="UTF-8">
   <title>LPM</title>
 </head>
 <body>
-<a href=""><img src="../Ressources/Images/imagesItems/petitePhoto.jpg" onmouseover="this.src='../Ressources/Images/imagesItems/APhotoND.jpg'" onmouseout="this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'"/></a>
+
 <?php
 include('menuLPM.php'); 
 include('fonctionsItem.php');
-echo "<h1>Bienvenue sur la page d'accueil</h1>";
 if ($_SESSION['code'] == ''){
 	echo "<font size=3 color=red>Veuillez utiliser le bouton connexion du menu!</font>";
 }else{
-echo '<form action="rechercherPageAccueil.php" method="post" enctype="multipart/form-data">';
-echo '<div id="div_table_accueil">';
-echo '<Center><table><tr><td><input type="text" name="champRecherche">';
-echo '<input type="submit" name="submit" value="Rechercher"></td></tr></table></div><br>';
-
+//echo '<form action="rechercherPageAccueil.php" method="post" enctype="multipart/form-data">';
+//echo '<div id="div_table_accueil">';
+//echo '<Center><table><tr><td><input type="text" name="champRecherche">';
+//echo '<input type="submit" name="submit" value="Rechercher"></td></tr></table></div><br>';
+echo '<form action="commander.php" method="post" enctype="multipart/form-data">';
+echo '<font size=3 color=black>Les quantités sont à titre indicatif seulement vous pouvez commander au delà de la disponibilité en inventaire !</font>';
+echo '<font size=3 color=black><br>Lorsque vous avez terminer de choisir chacune de vos quantité appuyé sur ce gros bouton!</font>';
+echo '<center><input type="submit" name="submit" style="width:300px; height:150px; color:green;" value="Passez ma commande !"></div><br>';
 
 $items=GetProduits();
-foreach ($items as $item){	
-	echo $item[nom];
-	echo "allo";
-}
 
-     $i=1; 
-     echo '<div id="div_table_accueil">';
-     echo '<table align=center ><br><tr>';
+	 echo '<div id="div_table_accueil">';
+     echo '<table align=center border=1>';
      $tableauAffichage = array();
+     $categorie = "";
+     $categorieold= "";
      foreach ($items as $item){           
-	  
-      	  
+         	  
           if ($item[estActif])
             {
+               $categorie = $item[categorie];
+               if (!($categorieold==$categorie)){
+               		echo "<tr><td align=center colspan=3><div style=\"font-size: large; font-family: sans-serif\"><p style=\"color: #ffffff; background-color: #000000\">Catégorie:$categorie</p></div></td></tr>";
+               }
+               $categorieold = $item[categorie];
+               echo "<tr><td align=left>Quantité voulue:<input type='text' name=$item[id] value = 0>";
+               echo "<td align=left>Id: ";
+               echo  $item[id];
+               echo "<br>Quantité disponible: ";
+               echo  $item[quantite];
+               echo "<br>Nom: ";
+               echo  $item[nom];
+               echo "<br>Description: ";
+               echo $item[description];
+               echo "<br>Coût: ";
+               echo $item[cout];
+               echo "$<br>";
                $photo = $item[photographie];
                if ("" == $item[photographie])
                {
-                  $photo = "APhotoND.jpg";
+               	$photo = "APhotoND.jpg";
                }
-               echo "<td>";
-               echo  $item [id];
-               echo "<br>";
-               echo  $item[quantite];
-               echo "<br>";
-               echo  $item[nom];
-               echo "<br>";
-               echo $item[description];
-               echo "<br>";
-               echo $item[cout];
-               echo "<br>";
-                  //$lienImage = '<td><a href="afficheItem.php?noItemUnique='.$item[id].'"><img src=../Ressources/Images/imagesItems/'.$photo.' style="width:230px;height:180px"/></a><br>' ;
-                                                                                
-                                                                              //echo "<img src=\"../Ressources/Images/imagesItems/petitePhoto.jpg\" onmouseover=\"this.src='../Ressources/Images/imagesItems/.$photo.'\" onmouseout=\"this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'\"/>";
-              $lienImage = "<td><a href='afficheItem.php?noItemUnique='.$item[id].'><img src=\"../Ressources/Images/imagesItems/petitePhoto.jpg\" onmouseover=\"this.src='../Ressources/Images/imagesItems/$photo'\" onmouseout=\"this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'\"/></a>";
-                  echo $lienImage;
-                  echo "</td>";
-               
-                  if (0==$i%4){
-                     echo "</tr><tr>";
-                  }
-                  $i = ++$i;
-               }
+               //$lienImage = "<td><a href='afficheItem.php?noItemUnique='.$item[id].'><img src=\"../Ressources/Images/imagesItems/petitePhoto.jpg\" onmouseover=\"this.src='../Ressources/Images/imagesItems/$photo'\" onmouseout=\"this.src='../Ressources/Images/imagesItems/petitePhoto.jpg'\"/></a>";
+               $lienImage = "<td><img src=\"../Ressources/Images/imagesItems/$photo\" style=\"width:230px;height:180px\"/>";
+               echo $lienImage;
+               echo "</td></td></tr>";    
             }
-    echo '</tr></table></div>';
+         }
+    echo '</table></div>';
 }
 ?>
 </form>
